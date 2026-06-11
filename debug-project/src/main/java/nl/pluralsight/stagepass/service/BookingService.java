@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BookingService {
@@ -33,7 +34,9 @@ public class BookingService {
     }
 
     public List<Booking> getBookingsByConcert(Long concertId) {
-        return bookingRepository.findAll();
+
+        //you don't wnat to do find all
+        return bookingRepository.findByConcertId(concertId);
     }
 
 
@@ -57,7 +60,10 @@ public class BookingService {
 
         int availableSeats = concert.getAvailableSeats();
 
+        BigDecimal ticketPrice = concert.getTicketPrice();
+
         concert.setAvailableSeats(availableSeats - numberOfTickets);
+        booking.setTotalPrice(ticketPrice.multiply(BigDecimal.valueOf(numberOfTickets)));
 
         return bookingRepository.save(booking);
     }

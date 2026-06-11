@@ -24,6 +24,7 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.getAllBookings());
     }
 
+
     @GetMapping("/{id}")
     public ResponseEntity<Booking> getBookingById(@PathVariable Long id) {
         return bookingService.getBookingById(id)
@@ -35,9 +36,6 @@ public class BookingController {
     public ResponseEntity<List<Booking>> getBookingsByConcert(@PathVariable Long concertId) {
         return ResponseEntity.ok(bookingService.getBookingsByConcert(concertId));
     }
-
-
-
 
 
     @PostMapping
@@ -53,7 +51,7 @@ public class BookingController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> cancelBooking(@PathVariable Long id) {
         if (bookingService.cancelBooking(id)) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
     }
